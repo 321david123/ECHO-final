@@ -1,0 +1,9 @@
+{
+  "name": "workos-otp-test",
+  "private": true,
+  "type": "module",
+  "description": "Quick test: send one WorkOS Magic Auth OTP to check deliverability (inbox vs quarantine).",
+  "dependencies": {
+    "@workos-inc/node": "^8.0.0"
+  }
+}

@@ -1,0 +1,404 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E1A000012020000000000001 /* ECHOApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000022020000000000001 /* ECHOApp.swift */; };
+		E1A000032020000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000042020000000000001 /* ContentView.swift */; };
+		E1A000052020000000000001 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000062020000000000001 /* Post.swift */; };
+		E1A000072020000000000001 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000082020000000000001 /* Comment.swift */; };
+		E1A000092020000000000001 /* Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A0000A2020000000000001 /* Campus.swift */; };
+		E1A0000B2020000000000001 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A0000C2020000000000001 /* Vote.swift */; };
+		E1A0000D2020000000000001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A0000E2020000000000001 /* AppState.swift */; };
+		E1A0000F2020000000000001 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000102020000000000001 /* FeedView.swift */; };
+		E1A000112020000000000001 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000122020000000000001 /* ComposeView.swift */; };
+		E1A000132020000000000001 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000142020000000000001 /* PostDetailView.swift */; };
+		E1A000152020000000000001 /* PostRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000162020000000000001 /* PostRowView.swift */; };
+		E1A000172020000000000001 /* CampusPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000182020000000000001 /* CampusPickerView.swift */; };
+		E1A000192020000000000001 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A0001A2020000000000001 /* Color+Theme.swift */; };
+		E1A0002E2020000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1A0002F2020000000000001 /* Assets.xcassets */; };
+		E1A000302020000000000001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000312020000000000001 /* OnboardingView.swift */; };
+		E1A000322020000000000001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000332020000000000001 /* ProfileView.swift */; };
+		E1A000342020000000000001 /* ExplorarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000352020000000000001 /* ExplorarView.swift */; };
+		E1A000362020000000000001 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000372020000000000001 /* MessagesView.swift */; };
+		E1A000382020000000000001 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = E1A000392020000000000001 /* Supabase */; };
+		E1A0003A2020000000000001 /* SupabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A0003B2020000000000001 /* SupabaseClient.swift */; };
+		E1A0003C2020000000000001 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A0003D2020000000000001 /* AuthService.swift */; };
+		E1A0003E2020000000000001 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A0003F2020000000000001 /* DatabaseService.swift */; };
+		E1A000412020000000000001 /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000422020000000000001 /* SupabaseConfig.swift */; };
+		E1A000432020000000000001 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000442020000000000001 /* Conversation.swift */; };
+		E1A000452020000000000001 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000462020000000000001 /* PrivateMessage.swift */; };
+		E1A000472020000000000001 /* ConversationThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A000482020000000000001 /* ConversationThreadView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		463D00E82F40055A00FC7060 /* ECHO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ECHO.entitlements; sourceTree = "<group>"; };
+		E1A000022020000000000001 /* ECHOApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOApp.swift; sourceTree = "<group>"; };
+		E1A000042020000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E1A000062020000000000001 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		E1A000082020000000000001 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		E1A0000A2020000000000001 /* Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Campus.swift; sourceTree = "<group>"; };
+		E1A0000C2020000000000001 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
+		E1A0000E2020000000000001 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		E1A000102020000000000001 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		E1A000122020000000000001 /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
+		E1A000142020000000000001 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		E1A000162020000000000001 /* PostRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRowView.swift; sourceTree = "<group>"; };
+		E1A000182020000000000001 /* CampusPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusPickerView.swift; sourceTree = "<group>"; };
+		E1A0001A2020000000000001 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
+		E1A0001B2020000000000001 /* ECHO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECHO.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1A0002F2020000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E1A000312020000000000001 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		E1A000332020000000000001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		E1A000352020000000000001 /* ExplorarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorarView.swift; sourceTree = "<group>"; };
+		E1A000372020000000000001 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		E1A0003B2020000000000001 /* SupabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClient.swift; sourceTree = "<group>"; };
+		E1A0003D2020000000000001 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		E1A0003F2020000000000001 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		E1A000422020000000000001 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
+		E1A000442020000000000001 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		E1A000462020000000000001 /* PrivateMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMessage.swift; sourceTree = "<group>"; };
+		E1A000482020000000000001 /* ConversationThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationThreadView.swift; sourceTree = "<group>"; };
+		E1A000492020000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E1A0001C2020000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1A000382020000000000001 /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E1A0001D2020000000000001 = {
+			isa = PBXGroup;
+			children = (
+				E1A0001E2020000000000001 /* ECHO */,
+				E1A0001F2020000000000001 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E1A0001E2020000000000001 /* ECHO */ = {
+			isa = PBXGroup;
+			children = (
+				463D00E82F40055A00FC7060 /* ECHO.entitlements */,
+				E1A000022020000000000001 /* ECHOApp.swift */,
+				E1A000042020000000000001 /* ContentView.swift */,
+				E1A000202020000000000001 /* Models */,
+				E1A000212020000000000001 /* Views */,
+				E1A000222020000000000001 /* Services */,
+				E1A000232020000000000001 /* Theme */,
+				E1A0002F2020000000000001 /* Assets.xcassets */,
+				E1A000492020000000000001 /* Info.plist */,
+			);
+			path = ECHO;
+			sourceTree = "<group>";
+		};
+		E1A0001F2020000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E1A0001B2020000000000001 /* ECHO.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E1A000202020000000000001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E1A000062020000000000001 /* Post.swift */,
+				E1A000082020000000000001 /* Comment.swift */,
+				E1A0000A2020000000000001 /* Campus.swift */,
+				E1A0000C2020000000000001 /* Vote.swift */,
+				E1A000442020000000000001 /* Conversation.swift */,
+				E1A000462020000000000001 /* PrivateMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E1A000212020000000000001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E1A000102020000000000001 /* FeedView.swift */,
+				E1A000122020000000000001 /* ComposeView.swift */,
+				E1A000142020000000000001 /* PostDetailView.swift */,
+				E1A000162020000000000001 /* PostRowView.swift */,
+				E1A000182020000000000001 /* CampusPickerView.swift */,
+				E1A000312020000000000001 /* OnboardingView.swift */,
+				E1A000332020000000000001 /* ProfileView.swift */,
+				E1A000352020000000000001 /* ExplorarView.swift */,
+				E1A000372020000000000001 /* MessagesView.swift */,
+				E1A000482020000000000001 /* ConversationThreadView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E1A000222020000000000001 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E1A0000E2020000000000001 /* AppState.swift */,
+				E1A0003B2020000000000001 /* SupabaseClient.swift */,
+				E1A0003D2020000000000001 /* AuthService.swift */,
+				E1A0003F2020000000000001 /* DatabaseService.swift */,
+				E1A000422020000000000001 /* SupabaseConfig.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E1A000232020000000000001 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				E1A0001A2020000000000001 /* Color+Theme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E1A000242020000000000001 /* ECHO */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1A000252020000000000001 /* Build configuration list for PBXNativeTarget "ECHO" */;
+			buildPhases = (
+				E1A000262020000000000001 /* Sources */,
+				E1A0001C2020000000000001 /* Frameworks */,
+				E1A000272020000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ECHO;
+			packageProductDependencies = (
+				E1A000392020000000000001 /* Supabase */,
+			);
+			productName = ECHO;
+			productReference = E1A0001B2020000000000001 /* ECHO.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E1A000282020000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = E1A000292020000000000001 /* Build configuration list for PBXProject "ECHO" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = es;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				es,
+				Base,
+				en,
+			);
+			mainGroup = E1A0001D2020000000000001;
+			packageReferences = (
+				E1A000402020000000000001 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			productRefGroup = E1A0001F2020000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E1A000242020000000000001 /* ECHO */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E1A000272020000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1A0002E2020000000000001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E1A000262020000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1A000012020000000000001 /* ECHOApp.swift in Sources */,
+				E1A000032020000000000001 /* ContentView.swift in Sources */,
+				E1A000052020000000000001 /* Post.swift in Sources */,
+				E1A000072020000000000001 /* Comment.swift in Sources */,
+				E1A000092020000000000001 /* Campus.swift in Sources */,
+				E1A0000B2020000000000001 /* Vote.swift in Sources */,
+				E1A0000D2020000000000001 /* AppState.swift in Sources */,
+				E1A0000F2020000000000001 /* FeedView.swift in Sources */,
+				E1A000112020000000000001 /* ComposeView.swift in Sources */,
+				E1A000132020000000000001 /* PostDetailView.swift in Sources */,
+				E1A000152020000000000001 /* PostRowView.swift in Sources */,
+				E1A000172020000000000001 /* CampusPickerView.swift in Sources */,
+				E1A000192020000000000001 /* Color+Theme.swift in Sources */,
+				E1A000302020000000000001 /* OnboardingView.swift in Sources */,
+				E1A000322020000000000001 /* ProfileView.swift in Sources */,
+				E1A000342020000000000001 /* ExplorarView.swift in Sources */,
+				E1A000362020000000000001 /* MessagesView.swift in Sources */,
+				E1A0003A2020000000000001 /* SupabaseClient.swift in Sources */,
+				E1A0003C2020000000000001 /* AuthService.swift in Sources */,
+				E1A0003E2020000000000001 /* DatabaseService.swift in Sources */,
+				E1A000412020000000000001 /* SupabaseConfig.swift in Sources */,
+				E1A000432020000000000001 /* Conversation.swift in Sources */,
+				E1A000452020000000000001 /* PrivateMessage.swift in Sources */,
+				E1A000472020000000000001 /* ConversationThreadView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E1A0002A2020000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E1A0002B2020000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E1A0002C2020000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ECHO/ECHO.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = MQ426V7959;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ECHO/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dmr.echo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E1A0002D2020000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ECHO/ECHO.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = MQ426V7959;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ECHO/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dmr.echo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E1A000252020000000000001 /* Build configuration list for PBXNativeTarget "ECHO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1A0002C2020000000000001 /* Debug */,
+				E1A0002D2020000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1A000292020000000000001 /* Build configuration list for PBXProject "ECHO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1A0002A2020000000000001 /* Debug */,
+				E1A0002B2020000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E1A000402020000000000001 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E1A000392020000000000001 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1A000402020000000000001 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = E1A000282020000000000001 /* Project object */;
+}

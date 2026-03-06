@@ -1,0 +1,14 @@
+{
+  "images" : [
+    {
+      "filename" : "echo_squirrel_bg_updated.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

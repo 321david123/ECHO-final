@@ -1,0 +1,19 @@
+# Supabase project config (used by CLI).
+# Ensures Auth Hook function is callable without JWT.
+[functions.send-email]
+verify_jwt = false
+
+[functions.auth-send-email]
+verify_jwt = false
+
+[functions.request-otp]
+verify_jwt = false
+
+[functions.verify-otp]
+verify_jwt = false
+
+[functions.workos-send-otp]
+verify_jwt = false
+
+[functions.workos-verify-otp]
+verify_jwt = false

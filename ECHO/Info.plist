@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Echo</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>ECHO_SUPABASE_URL</key>
+	<string>https://skshtzifgqlbnloehncq.supabase.co</string>
+	<key>ECHO_SUPABASE_ANON_KEY</key>
+	<string>sb_publishable_2RnpTh4UPTPjXdnoYjAPVQ_0mYqOxtS</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>echo</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>Auth callback</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+</dict>
+</plist>
