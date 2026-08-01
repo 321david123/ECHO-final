@@ -19,11 +19,28 @@ final class AuthService: ObservableObject {
     func getCurrentUserId() async -> UUID? {
         (try? await getSession())?.user.id
     }
+
+    /// When the current account was created (used to gate the referral claim prompt to fresh signups).
+    func getCurrentUserCreatedAt() async -> Date? {
+        (try? await getSession())?.user.createdAt
+    }
     
     /// Sign in anonymously (no email, no OTP). Call createProfile(uid, campusId) after.
     func signInAnonymously() async throws {
         guard let client = client else { throw EchoError.supabaseNotConfigured }
         _ = try await client.auth.signInAnonymously()
+    }
+    
+    /// Sign in with email + password (used for persistent reviewer account).
+    func signInWithPassword(email: String, password: String) async throws {
+        guard let client = client else { throw EchoError.supabaseNotConfigured }
+        _ = try await client.auth.signIn(email: email, password: password)
+    }
+    
+    /// Create account with email + password (used for persistent reviewer account).
+    func signUpWithPassword(email: String, password: String) async throws {
+        guard let client = client else { throw EchoError.supabaseNotConfigured }
+        _ = try await client.auth.signUp(email: email, password: password)
     }
     
     /// Send 6-digit OTP via WorkOS (Edge Function workos-send-otp). Caller must validate email domain for campus.
@@ -114,6 +131,17 @@ final class AuthService: ObservableObject {
             .execute()
     }
     
+    /// Update the current user's display name, emoji, and/or accent color. Pass nil to clear any field.
+    func updateProfileDisplay(displayName: String?, emoji: String?, accentColor: String?) async throws {
+        guard let client = client, let uid = await getCurrentUserId() else { throw EchoError.notAuthenticated }
+        let payload = ProfileDisplayUpdate(displayName: displayName, emoji: emoji, accentColor: accentColor, updatedAt: Date())
+        try await client
+            .from("profiles")
+            .update(payload)
+            .eq("id", value: uid.uuidString)
+            .execute()
+    }
+    
     /// Fetch profile for current user (campus_id).
     func fetchProfile() async throws -> ProfileRow? {
         guard let client = client, let uid = await getCurrentUserId() else { return nil }
@@ -168,12 +196,18 @@ private struct FunctionErrorBody: Decodable {
 struct ProfileRow: Codable {
     let id: UUID
     let campusId: String
+    let displayName: String?
+    let emoji: String?
+    let accentColor: String?
     let createdAtString: String?
     let updatedAtString: String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case campusId = "campus_id"
+        case displayName = "display_name"
+        case emoji
+        case accentColor = "accent_color"
         case createdAtString = "created_at"
         case updatedAtString = "updated_at"
     }
@@ -194,6 +228,19 @@ private struct ProfileUpsert: Encodable {
     enum CodingKeys: String, CodingKey {
         case id
         case campusId = "campus_id"
+        case updatedAt = "updated_at"
+    }
+}
+
+private struct ProfileDisplayUpdate: Encodable {
+    let displayName: String?
+    let emoji: String?
+    let accentColor: String?
+    let updatedAt: Date
+    enum CodingKeys: String, CodingKey {
+        case displayName = "display_name"
+        case emoji
+        case accentColor = "accent_color"
         case updatedAt = "updated_at"
     }
 }

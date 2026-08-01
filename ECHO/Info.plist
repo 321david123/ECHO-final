@@ -10,6 +10,8 @@
 	<string>https://skshtzifgqlbnloehncq.supabase.co</string>
 	<key>ECHO_SUPABASE_ANON_KEY</key>
 	<string>sb_publishable_2RnpTh4UPTPjXdnoYjAPVQ_0mYqOxtS</string>
+	<key>ECHO_SHARE_BASE_URL</key>
+	<string>https://321david123.github.io</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

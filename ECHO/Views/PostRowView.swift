@@ -6,6 +6,7 @@
 import SwiftUI
 
 struct PostRowView: View {
+    @EnvironmentObject var appState: AppState
     let post: Post
     let campusName: String
     let vote: VoteDirection
@@ -13,6 +14,26 @@ struct PostRowView: View {
     var pollVoteCounts: [Int: Int] = [:]
     var myPollVote: Int? = nil
     var onPollVote: ((Int) -> Void)? = nil
+    /// Tapping a hashtag chip navigates to the hashtag feed (handled by parent).
+    var onTapHashtag: ((String) -> Void)? = nil
+    @State private var messageConversation: Conversation?
+    @State private var showReported = false
+    @State private var voteFloat: Int? = nil
+    @State private var upJumpTrigger: Int = 0
+    @State private var downJumpTrigger: Int = 0
+    
+    private var canMessageAuthor: Bool {
+        guard let authorId = post.authorId, let me = appState.currentUserId else { return false }
+        return authorId != me
+    }
+    
+    private var hashtags: [String] {
+        AppState.extractHashtags(from: post.body)
+    }
+    
+    private var shareText: String {
+        ShareLinks.text(for: post)
+    }
     
     private func relativeTime(_ date: Date) -> String {
         let s = Int(-date.timeIntervalSinceNow)
@@ -23,20 +44,36 @@ struct PostRowView: View {
         return "\(s / 604800)sem"
     }
     
+    private var authorName: String {
+        let n = post.authorDisplayName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return n.isEmpty ? "Anónimo" : n
+    }
+    private var authorAvatar: String {
+        let e = post.authorEmoji?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return e.isEmpty ? "A" : e
+    }
+    private var avatarIsEmoji: Bool {
+        let e = post.authorEmoji?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return !e.isEmpty
+    }
+    private var avatarTint: Color {
+        AccentColor.from(post.authorAccentColor).color
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // Sender row: avatar, name, school, time, menu — padding above and below for clear separation
             HStack(alignment: .center, spacing: 12) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.echoGreen.opacity(0.35))
+                        .fill(avatarTint.opacity(0.35))
                         .frame(width: 40, height: 40)
-                    Text("A")
-                        .font(.body.weight(.bold))
-                        .foregroundStyle(Color.echoGreen)
+                    Text(authorAvatar)
+                        .font(avatarIsEmoji ? .system(size: 22) : .body.weight(.bold))
+                        .foregroundStyle(avatarIsEmoji ? Color.echoText : avatarTint)
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Anónimo")
+                    Text(authorName)
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.echoText)
@@ -45,15 +82,33 @@ struct PostRowView: View {
                         .foregroundStyle(Color.echoTextSecondary)
                 }
                 Spacer(minLength: 0)
+                if post.isPinned {
+                    HStack(spacing: 4) {
+                        Image(systemName: "pin.fill")
+                            .font(.caption)
+                        Text("Aviso")
+                            .font(.caption.weight(.semibold))
+                    }
+                    .foregroundStyle(Color.echoGreen)
+                }
                 Text(relativeTime(post.createdAt))
                     .font(.subheadline)
                     .foregroundStyle(Color.echoTextTertiary)
-                Button { } label: {
+                Menu {
+                    Button(role: .destructive) {
+                        appState.reportPost(postId: post.id)
+                        showReported = true
+                    } label: {
+                        Label("Reportar", systemImage: "flag")
+                    }
+                } label: {
                     Image(systemName: "ellipsis")
                         .font(.body.weight(.medium))
                         .foregroundStyle(Color.echoTextSecondary)
+                        .frame(width: 36, height: 36)
+                        .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.borderless)
             }
             .padding(.top, 16)
             .padding(.bottom, 10)
@@ -138,6 +193,27 @@ struct PostRowView: View {
                 .padding(.bottom, 14)
             }
             
+            // Hashtag chips
+            if !hashtags.isEmpty {
+                HStack(spacing: 6) {
+                    ForEach(hashtags.prefix(4), id: \.self) { tag in
+                        Button {
+                            onTapHashtag?(tag)
+                        } label: {
+                            Text("#\(tag)")
+                                .font(.caption.weight(.medium))
+                                .foregroundStyle(Color.echoGreen)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.echoGreen.opacity(0.12))
+                                .clipShape(Capsule())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.bottom, 10)
+            }
+            
             // Interaction bar: comment, share, vote — even spacing like reference
             HStack(spacing: 20) {
                 HStack(spacing: 6) {
@@ -148,42 +224,79 @@ struct PostRowView: View {
                 }
                 .foregroundStyle(Color.echoTextSecondary)
                 
-                Image(systemName: "paperplane")
-                    .font(.body)
-                    .foregroundStyle(Color.echoTextSecondary)
+                ShareLink(item: shareText) {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.body)
+                        .foregroundStyle(Color.echoTextSecondary)
+                }
+                .buttonStyle(.plain)
+                
+                Button {
+                    guard canMessageAuthor, let authorId = post.authorId else { return }
+                    Task {
+                        if let conv = try? await appState.getOrCreateConversation(postId: post.id, postAuthorId: authorId) {
+                            messageConversation = conv
+                        }
+                    }
+                } label: {
+                    Image(systemName: "paperplane")
+                        .font(.body)
+                        .foregroundStyle(Color.echoTextSecondary)
+                }
+                .buttonStyle(.plain)
                 
                 Spacer(minLength: 0)
                 
-                HStack(spacing: 8) {
-                    Button {
-                        onVote(vote == .up ? .none : .up)
-                    } label: {
-                        Image(systemName: "arrow.up")
-                            .font(.body.weight(.semibold))
-                            .foregroundStyle(vote == .up ? Color.echoGreen : Color.echoTextSecondary)
-                            .frame(width: 32, height: 32)
-                            .background(Color.echoVoteCircle)
-                            .clipShape(Circle())
+                if !post.isPinned {
+                    HStack(spacing: 8) {
+                        Button {
+                            let prev = vote
+                            let next: VoteDirection = (vote == .up) ? .none : .up
+                            onVote(next)
+                            triggerVoteFloat(prev: prev, next: next)
+                            upJumpTrigger &+= 1
+                        } label: {
+                            Image(systemName: "arrow.up")
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(vote == .up ? Color.echoGreen : Color.echoTextSecondary)
+                                .modifier(ArrowJump(direction: .up, trigger: upJumpTrigger))
+                                .frame(width: 32, height: 32)
+                                .background(Color.echoVoteCircle)
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(.plain)
+                        
+                        ZStack {
+                            Text("\(post.score)")
+                                .font(.body)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Color.echoGreen)
+                                .frame(minWidth: 28, alignment: .center)
+                                .contentTransition(.numericText(value: Double(post.score)))
+                                .animation(.snappy(duration: 0.12), value: post.score)
+                            
+                            if let delta = voteFloat {
+                                FloatingDeltaLabel(delta: delta)
+                            }
+                        }
+                        
+                        Button {
+                            let prev = vote
+                            let next: VoteDirection = (vote == .down) ? .none : .down
+                            onVote(next)
+                            triggerVoteFloat(prev: prev, next: next)
+                            downJumpTrigger &+= 1
+                        } label: {
+                            Image(systemName: "arrow.down")
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(vote == .down ? Color.echoOrange : Color.echoTextSecondary)
+                                .modifier(ArrowJump(direction: .down, trigger: downJumpTrigger))
+                                .frame(width: 32, height: 32)
+                                .background(Color.echoVoteCircle)
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
-                    
-                    Text("\(post.score)")
-                        .font(.body)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.echoGreen)
-                        .frame(minWidth: 28, alignment: .center)
-                    
-                    Button {
-                        onVote(vote == .down ? .none : .down)
-                    } label: {
-                        Image(systemName: "arrow.down")
-                            .font(.body.weight(.semibold))
-                            .foregroundStyle(vote == .down ? Color.echoOrange : Color.echoTextSecondary)
-                            .frame(width: 32, height: 32)
-                            .background(Color.echoVoteCircle)
-                            .clipShape(Circle())
-                    }
-                    .buttonStyle(.plain)
                 }
             }
             .padding(.vertical, 12)
@@ -194,6 +307,88 @@ struct PostRowView: View {
                 .frame(height: 1)
                 .frame(maxWidth: .infinity)
         }
+        .sheet(item: $messageConversation) { conv in
+            NavigationStack {
+                ConversationThreadView(conversation: conv)
+                    .environmentObject(appState)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cerrar") { messageConversation = nil }
+                                .foregroundStyle(Color.echoGreen)
+                        }
+                    }
+            }
+        }
+        .overlay(alignment: .top) {
+            if showReported {
+                HStack(spacing: 6) {
+                    Image(systemName: "checkmark.circle.fill")
+                    Text("Reportado")
+                }
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color.echoGreen)
+                .clipShape(Capsule())
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation { showReported = false }
+                    }
+                }
+            }
+        }
+        .animation(.easeInOut(duration: 0.3), value: showReported)
+    }
+    
+    private func triggerVoteFloat(prev: VoteDirection, next: VoteDirection) {
+        let delta = next.rawValue - prev.rawValue
+        guard delta != 0 else { return }
+        voteFloat = delta
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.32) {
+            voteFloat = nil
+        }
+    }
+}
+
+/// Makes an arrow icon "jump" in its pointing direction when `trigger` changes:
+/// up arrow shoots up then springs back, down arrow shoots down then springs back.
+struct ArrowJump: ViewModifier {
+    enum Direction { case up, down }
+    let direction: Direction
+    let trigger: Int
+    
+    func body(content: Content) -> some View {
+        content
+            .keyframeAnimator(initialValue: 0.0, trigger: trigger) { view, offset in
+                view.offset(y: offset)
+            } keyframes: { _ in
+                SpringKeyframe(direction == .up ? -10.0 : 10.0, duration: 0.10, spring: .bouncy)
+                SpringKeyframe(0.0, duration: 0.22, spring: .bouncy)
+            }
+    }
+}
+
+/// Small "+1" / "-1" badge that floats up and fades out. Used to give visible
+/// feedback when the user up/downvotes a post or comment.
+struct FloatingDeltaLabel: View {
+    let delta: Int
+    @State private var offsetY: CGFloat = 0
+    @State private var opacity: Double = 1
+    
+    var body: some View {
+        Text(delta > 0 ? "+\(delta)" : "\(delta)")
+            .font(.caption.weight(.bold))
+            .foregroundStyle(delta > 0 ? Color.echoGreen : Color.echoOrange)
+            .offset(y: offsetY)
+            .opacity(opacity)
+            .onAppear {
+                withAnimation(.easeOut(duration: 0.28)) {
+                    offsetY = -24
+                    opacity = 0
+                }
+            }
     }
 }
 
@@ -205,5 +400,6 @@ struct PostRowView: View {
             vote: .none,
             onVote: { _ in }
         )
+        .environmentObject(AppState())
     }
 }

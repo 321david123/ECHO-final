@@ -158,7 +158,7 @@ struct ComposeView: View {
                         Text("\(remaining)")
                             .font(.caption)
                             .foregroundStyle(remaining < 20 ? Color.echoOrange : Color.echoTextSecondary)
-                        Text("Anónimo · \(appState.selectedCampus.shortName)")
+                        Text("\((appState.displayName?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false ? appState.displayName! : "Anónimo")) · \(appState.selectedCampus.shortName)")
                             .font(.caption)
                             .foregroundStyle(Color.echoTextTertiary)
                     }

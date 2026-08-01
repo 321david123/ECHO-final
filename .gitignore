@@ -1,0 +1,16 @@
+# Secrets — never commit
+SECRETS.local.md
+
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# Node
+node_modules/
+
+# Supabase CLI temp
+supabase/.temp/

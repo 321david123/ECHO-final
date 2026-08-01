@@ -45,15 +45,30 @@ struct ECHOApp: App {
             }
             .id("\(appState.requiresReauthAfterSignOut)-\(appState.hasCompletedOnboarding)-\(appState.verifiedCampus?.id ?? "")")
             .onOpenURL { url in
-                appState.handleAuthCallbackURL(url)
+                if url.scheme == "echo" && url.host == "auth" {
+                    appState.handleAuthCallbackURL(url)
+                } else if url.scheme == "echo" && url.host == "post" {
+                    _ = appState.handlePostDeepLinkURL(url)
+                } else if let postId = ShareLinks.postId(from: url) {
+                    appState.openPost(id: postId)
+                } else if appState.handleInviteLinkURL(url) {
+                    // Invite link (…/i/CODE): code prefilled, claim sheet shown if eligible.
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: ECHOAppDelegate.didTapPushNotification)) { note in
+                if let info = note.userInfo {
+                    appState.handlePushUserInfo(info)
+                }
             }
         }
     }
 }
 
-// MARK: - App delegate for push (APNs token). In same file so it's always in the target.
+// MARK: - App delegate for push (APNs token + tap routing). In same file so it's always in the target.
 final class ECHOAppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     static let didRegisterDeviceTokenNotification = Notification.Name("ECHO_DidRegisterDeviceToken")
+    /// Posted when the user taps a push notification. userInfo contains the APNs payload.
+    static let didTapPushNotification = Notification.Name("ECHO_DidTapPushNotification")
     private static let tokenKey = "ECHO_APNs_device_token"
     
     static func clearStoredToken() {
@@ -79,5 +94,14 @@ final class ECHOAppDelegate: NSObject, UIApplicationDelegate, UNUserNotification
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         [.banner, .sound, .badge, .list]
+    }
+    
+    /// Called when the user taps the notification banner / open it from the lock screen.
+    /// Forwards the userInfo so AppState can deep-link to the right post or conversation.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        let userInfo = response.notification.request.content.userInfo
+        await MainActor.run {
+            NotificationCenter.default.post(name: Self.didTapPushNotification, object: nil, userInfo: userInfo)
+        }
     }
 }

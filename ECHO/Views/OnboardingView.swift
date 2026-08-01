@@ -254,6 +254,16 @@ struct OnboardingView: View {
                     if newValue.count > 6 { code = String(newValue.prefix(6)) }
                 }
             
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "clock")
+                    .font(.caption)
+                    .foregroundStyle(Color.echoTextTertiary)
+                Text("El código puede tardar unos segundos en llegar. Revisa también tu carpeta de spam.")
+                    .font(.caption)
+                    .foregroundStyle(Color.echoTextSecondary)
+            }
+            .padding(.horizontal, 24)
+            
             if let msg = errorMessage {
                 Text(msg)
                     .font(.caption)
@@ -325,16 +335,14 @@ struct OnboardingView: View {
         let trimmedCode = code.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         guard !trimmedCode.isEmpty, !trimmedEmail.isEmpty else { return }
+        await MainActor.run { isVerifying = true }
+        defer { Task { @MainActor in isVerifying = false } }
         if let reviewer = SupabaseConfig.reviewerEmail,
            trimmedEmail == reviewer.lowercased(),
            trimmedCode == SupabaseConfig.reviewerCode {
-            await MainActor.run {
-                appState.completeReviewerOnboarding(campus: selectedCampus)
-            }
+            await appState.completeReviewerOnboarding(campus: selectedCampus)
             return
         }
-        await MainActor.run { isVerifying = true }
-        defer { Task { @MainActor in isVerifying = false } }
         do {
             try await appState.enterWithEmailOTP(campus: selectedCampus, email: trimmedEmail, code: trimmedCode)
         } catch {

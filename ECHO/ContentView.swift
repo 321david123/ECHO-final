@@ -8,21 +8,24 @@ import UIKit
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
-    @State private var selectedTab = 0
     @State private var showingCompose = false
+    @State private var showingWalkthrough = false
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            TabView(selection: $selectedTab) {
+            TabView(selection: $appState.selectedTab) {
                 FeedView()
                     .tabItem { Label("Inicio", systemImage: "house.fill") }
                     .tag(0)
                 MessagesView()
                     .tabItem { Label("Mensajes", systemImage: "paperplane.fill") }
                     .tag(1)
+                ExplorarView()
+                    .tabItem { Label("Explorar", systemImage: "magnifyingglass") }
+                    .tag(2)
                 ProfileView()
                     .tabItem { Label("Perfil", systemImage: "person.fill") }
-                    .tag(2)
+                    .tag(3)
             }
             .tint(.echoGreen)
             .preferredColorScheme(.dark)
@@ -34,7 +37,7 @@ struct ContentView: View {
                 UITabBar.appearance().standardAppearance = appearance
             }
             
-            if selectedTab == 0 {
+            if appState.selectedTab == 0 {
                 Button {
                     showingCompose = true
                 } label: {
@@ -50,9 +53,32 @@ struct ContentView: View {
                 .padding(.trailing, 20)
                 .padding(.bottom, 52)
             }
+
+            if showingWalkthrough {
+                WalkthroughView(isPresented: $showingWalkthrough)
+                    .ignoresSafeArea()
+            }
         }
         .sheet(isPresented: $showingCompose) {
             ComposeView()
+        }
+        // "¿Quién te invitó?" — offered once to fresh accounts, after the walkthrough.
+        .sheet(isPresented: Binding(
+            get: { appState.shouldOfferReferralClaim && !showingWalkthrough },
+            set: { if !$0 { appState.shouldOfferReferralClaim = false } }
+        )) {
+            ReferralClaimSheet()
+                .environmentObject(appState)
+        }
+        .onAppear {
+            if !appState.hasCompletedWalkthrough {
+                showingWalkthrough = true
+            }
+        }
+        .onChange(of: showingWalkthrough) { _, isShowing in
+            if !isShowing {
+                appState.completeWalkthrough()
+            }
         }
     }
 }

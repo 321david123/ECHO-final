@@ -369,25 +369,10 @@ Data is **in-memory** only. To ship:
 
 Use and modify as you need for your product.
 
+## Secrets
 
-
-resend api key: re_XWJF4nME_43cjUcmJNLERwUJVmTvZgz7E
-
-supabase access token: sbp_73119fedf9a89e5bdcdac5aa6034e63229fb0691
-
-workos api:sk_test_a2V5XzAxS0g5VEtENjhZMllOU0JNVFJUSjJKU1ZKLDd4SFN3VW9udHJldGZLdkl0TElYYnRxRzM
-
-client id workos:
-client_01KH9TKDREZWXQ8ZJ3YFZMK2EG
-
-review@echoiosone.com
-
-onesignal app id:
-c274d7ea-3cd0-48c4-87fc-628dce6d455d
-
-
-onesignal api key:
-os_v2_app_yj2np2r42bemjb74mkg443kflxlyimgqn4zexfm5dtxsviflzi2tv76qby54j6f2t2e2g2fnz2slrrhfykcwiluco7s6q3hzd2ucc2a
+API keys live in `SECRETS.local.md` (gitignored). They were previously committed
+here — rotate them before making the repo public or adding collaborators.
 
 onesignal app id:
 c274d7ea-3cd0-48c4-87fc-628dce6d455d

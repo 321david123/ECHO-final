@@ -18,7 +18,7 @@ struct MessagesView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $appState.messagesPath) {
             Group {
                 if appState.useSupabase && !appState.conversations.isEmpty {
                     List {
@@ -29,9 +29,18 @@ struct MessagesView: View {
                                         .font(.subheadline)
                                         .foregroundStyle(Color.echoText)
                                         .lineLimit(2)
-                                    Text(relativeTime(conv.createdAt))
-                                        .font(.caption)
-                                        .foregroundStyle(Color.echoTextTertiary)
+                                    HStack(spacing: 6) {
+                                        if let last = conv.lastMessageBody {
+                                            Text(last)
+                                                .font(.caption)
+                                                .foregroundStyle(Color.echoTextSecondary)
+                                                .lineLimit(1)
+                                        }
+                                        Text(relativeTime(conv.lastMessageAt ?? conv.createdAt))
+                                            .font(.caption)
+                                            .foregroundStyle(Color.echoTextTertiary)
+                                            .layoutPriority(1)
+                                    }
                                 }
                                 .padding(.vertical, 4)
                             }

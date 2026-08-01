@@ -107,7 +107,8 @@ Deno.serve(async (req) => {
       include_aliases: { external_id: [userId] },
       contents: { en: bodyText || " " },
       headings: { en: title },
-      data: record.payload ?? {},
+      // Merge `kind` from queue row into data so the iOS app can deep-link.
+      data: { kind: record.kind ?? null, ...(record.payload ?? {}) },
     }),
   });
 
