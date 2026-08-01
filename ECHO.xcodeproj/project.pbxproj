@@ -416,7 +416,7 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		E1A000402020000000000001 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase/supabase-swift";
+			repositoryURL = "https://github.com/321david123/supabase-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.0;
